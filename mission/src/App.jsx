@@ -1,10 +1,15 @@
 import "./App.css";
 import Welcome from "./components/welcome";
 
+const userInfo = {
+  name: "LEE",
+  isMember: false,
+};
+
 function App() {
   return (
     <>
-      <Welcome name={"이정환"} isMember={true} />
+      <Welcome {...userInfo} />
     </>
   );
 }
