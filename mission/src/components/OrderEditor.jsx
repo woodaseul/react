@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const OrderEditor = () => {
-  const [menu, setMenu] = useState("족발");
-  const [address, setAddress] = useState("");
-  const [ordermemo, setOrdermemo] = useState("");
+  const [order, setOrder] = useState({
+    menu: "",
+    address: "",
+    ordermemo: "",
+  });
 
-  const onchangeMenu = (e) => {
-    setMenu(e.target.value);
-  };
+  const inputAddress = useRef();
 
-  const onchangeAddress = (e) => {
-    setAddress(e.target.value);
-  };
-
-  const oncahngeMemo = (e) => {
-    setOrdermemo(e.target.value);
+  const onChange = (e) => {
+    setOrder({ ...order, [e.target.name]: e.target.value });
   };
 
   const onSubmit = () => {
+    if (inputAddress.current.value === "") {
+      inputAddress.current.focus();
+      return;
+    }
     alert(
-      `주문이 완료되었습니다. 메뉴:${menu},주소:${address},요청사항:${ordermemo}`
+      `주문이 완료되었습니다. 메뉴:${order.menu},주소:${order.address},요청사항:${order.ordermemo}`
     );
   };
 
@@ -30,8 +30,9 @@ const OrderEditor = () => {
         <div style={{ marginBottom: 5, fontSize: 14 }}>메뉴 선택</div>
         <select
           style={{ width: 300, padding: 5 }}
-          value={menu}
-          onChange={onchangeMenu}
+          value={order.menu}
+          onChange={onChange}
+          name="menu"
         >
           <option value={"족발"}>족발</option>
           <option value={"떡볶이"}>떡볶이</option>
@@ -44,8 +45,10 @@ const OrderEditor = () => {
         <input
           style={{ width: 300, padding: 5 }}
           placeholder="주소) 서울특별시 xx동 .."
-          value={address}
-          onChange={onchangeAddress}
+          value={order.address}
+          onChange={onChange}
+          name="address"
+          ref={inputAddress}
         />
       </div>
       <div>
@@ -53,8 +56,9 @@ const OrderEditor = () => {
         <textarea
           style={{ width: 300, padding: 5 }}
           placeholder="배달 요청사항을 써 주세요..."
-          value={ordermemo}
-          onChange={oncahngeMemo}
+          value={order.ordermemo}
+          onChange={onChange}
+          name="ordermemo"
         />
       </div>
       <div>
