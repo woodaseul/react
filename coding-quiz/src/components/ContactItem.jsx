@@ -1,6 +1,7 @@
+import { memo } from "react";
 import "./ContactItem.css";
 
-export default function ContactItem({ id, name, contact, contactDelete }) {
+function ContactItem({ id, name, contact, contactDelete }) {
   return (
     <div className="ContactItem">
       <div className="name">{name}</div>
@@ -9,3 +10,5 @@ export default function ContactItem({ id, name, contact, contactDelete }) {
     </div>
   );
 }
+
+export default memo(ContactItem);
