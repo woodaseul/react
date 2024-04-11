@@ -1,19 +1,26 @@
 import { useState } from "react";
 import "./ContactEditor.css";
+import { useContext } from "react";
+import { contextDispatch } from "../App";
 
-export default function ContactEditor({ contactAdd }) {
+export default function ContactEditor() {
+  const { contactAdd } = useContext(contextDispatch);
+
   const [state, setState] = useState({
     name: "",
     contact: "",
   });
 
-  const onChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
+  const onChangeState = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const onSubmit = () => {
     if (state.name === "" || state.contact === "") {
-      alert("입력필수");
+      alert("정보입력하세요");
       return;
     }
     contactAdd(state.name, state.contact);
@@ -30,14 +37,14 @@ export default function ContactEditor({ contactAdd }) {
         <input
           value={state.name}
           name="name"
-          onChange={onChange}
+          onChange={onChangeState}
           className="name"
           placeholder="이름 ..."
         />
         <input
           value={state.contact}
           name="contact"
-          onChange={onChange}
+          onChange={onChangeState}
           className="contact"
           placeholder="연락처(이메일) ..."
         />
